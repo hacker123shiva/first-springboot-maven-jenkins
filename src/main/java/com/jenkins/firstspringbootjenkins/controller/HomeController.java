@@ -18,4 +18,9 @@ public class HomeController {
         return "Welcome to user page";
     }
 
+    @GetMapping("/all")
+    public String all() {
+        return "Welcome to all page";
+    }
+
 }
