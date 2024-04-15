@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymleaf.org"
+  th:replace="base :: Layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <section>
+      <div class="container">
+        <h1>Product Page</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="product : ${products}">
+              <td th:text="${product.id}">ID</td>
+              <td th:text="${product.name}">Name</td>
+              <td th:text="${product.price}">Price</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <script
+      th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"
+    ></script>
+  </body>
+</html>

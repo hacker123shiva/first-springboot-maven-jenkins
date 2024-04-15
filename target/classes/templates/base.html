@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="Layout(content)"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Product Management System</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/product}">View Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/product/add}">Add Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/product/update}">Update Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/product/delete}">Delete Product</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div th:replace="${content}"></div>
+
+    <script
+      th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"
+    ></script>
+  </body>
+</html>
