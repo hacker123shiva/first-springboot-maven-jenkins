@@ -11,11 +11,13 @@ pipeline {
             }
         }
         
-        stage('Build SpringApp Docker Image') {
-            steps {
-                echo 'Checking if docker service is available ...' 
-                echo 'Starting Docker Image building'
-                bat 'docker build -t hacker123shiva/springbt-in-docker:latest .'
+           stage ('Build SpringApp Docker Image ') {
+            steps{
+                script {
+                    echo 'Checking if docker service is available ...' 
+                    echo 'Starting Docker Image building'
+                    bat 'docker build -t hacker123shiva/springbt-in-docker:latest .'
+                }
             }
         }
         
@@ -23,21 +25,28 @@ pipeline {
             steps {
                 echo 'Logging to Docker registry.....'
                
-                withCredentials([string(credentialsId: 'mycredit', variable: 'dockerhubpwd')]) {
-                    bat 'docker login -u hacker123shiva -p %dockerhubpwd%'
-                }
                 
+                withCredentials([string(credentialsId: 'mycredit', variable: 'dockerhubpwd')]) {
+                   bat 'docker login -u hacker123shiva -p %dockerhubpwd%'
+}
                 echo 'Starting the push of Docker Image ....'
                 bat 'docker push hacker123shiva/springbt-in-docker:latest'
             }
         }
         
-        stage('Testing the deployment') {
-            steps {
-                echo 'Starting a local container of the App ....'
-                bat 'docker run -dit --name springapp -p 2000:8080 hacker123shiva/springbt-in-docker:latest'
-                echo 'The App is now available at Port 2000 ....'
-            }
+   stage('Testing the deployment') {
+    steps {
+        script {
+            echo 'Removing existing container and image...'
+            bat 'docker rm -f springapp || true' // Remove container if exists, ignore if not found
+            bat 'docker rmi -f hacker123shiva/springbt-in-docker:latest || true' // Remove image if exists, ignore if not found
         }
+        echo 'Starting a local container of the App ....'
+        bat 'docker run -dit --name springapp -p 2000:8080 hacker123shiva/springbt-in-docker:latest'
+        echo 'The App is now available at Port 2000 ....'
+    }
+}
+
+        
     }
 }
